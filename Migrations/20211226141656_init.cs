@@ -40,7 +40,7 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tb_m_Profilings",
+                name: "Tb_tr_Profilings",
                 columns: table => new
                 {
                     NIK = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -48,9 +48,9 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tb_m_Profilings", x => x.NIK);
+                    table.PrimaryKey("PK_Tb_tr_Profilings", x => x.NIK);
                     table.ForeignKey(
-                        name: "FK_Tb_m_Profilings_Tb_m_Educations_EducationId",
+                        name: "FK_Tb_tr_Profilings_Tb_m_Educations_EducationId",
                         column: x => x.EducationId,
                         principalTable: "Tb_m_Educations",
                         principalColumn: "Id",
@@ -68,9 +68,9 @@ namespace API.Migrations
                 {
                     table.PrimaryKey("PK_Tb_m_Accounts", x => x.NIK);
                     table.ForeignKey(
-                        name: "FK_Tb_m_Accounts_Tb_m_Profilings_NIK",
+                        name: "FK_Tb_m_Accounts_Tb_tr_Profilings_NIK",
                         column: x => x.NIK,
-                        principalTable: "Tb_m_Profilings",
+                        principalTable: "Tb_tr_Profilings",
                         principalColumn: "NIK",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -105,8 +105,8 @@ namespace API.Migrations
                 column: "UniversityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tb_m_Profilings_EducationId",
-                table: "Tb_m_Profilings",
+                name: "IX_Tb_tr_Profilings_EducationId",
+                table: "Tb_tr_Profilings",
                 column: "EducationId");
         }
 
@@ -119,7 +119,7 @@ namespace API.Migrations
                 name: "Tb_m_Accounts");
 
             migrationBuilder.DropTable(
-                name: "Tb_m_Profilings");
+                name: "Tb_tr_Profilings");
 
             migrationBuilder.DropTable(
                 name: "Tb_m_Educations");
