@@ -20,11 +20,15 @@ namespace API.Models
         [DataType(DataType.Password)]
         public String password { get; set; }
 
+        public System.Nullable<int> OTP { get; set; }
+
+        public System.Nullable<DateTime> expiredToken { get; set; }
+
+        public System.Nullable<bool> isUsed { get; set; }
+
         //[JsonIgnore]
         public virtual Employee Employee { get; set; }
         [JsonIgnore]
         public virtual Profiling Profiling { get; set; }
     }
-
-    
 }

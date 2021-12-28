@@ -128,7 +128,7 @@ namespace API.Repository
                 birthDate = registerVM.birthDate,
                 salary = registerVM.salary,
                 Email = registerVM.email,
-                gender = (Gender)registerVM.gender
+                Gender = (Gender)registerVM.gender
             };
 
             //Statement kondisi phone dan email
@@ -191,7 +191,7 @@ namespace API.Repository
                         select new
                         {
                             fullName = emp.firstName + " " + emp.lastName,
-                            gender = emp.gender == 0 ? "Laki-laki" : "Perempuan",
+                            gender = emp.Gender == 0 ? "Laki-laki" : "Perempuan",
                             emp.Phone,
                             emp.birthDate,
                             emp.salary,
@@ -222,7 +222,7 @@ namespace API.Repository
                         select new
                         {
                             fullName = emp.firstName + " " + emp.lastName,
-                            gender = emp.gender == 0 ? "Laki-laki" : "Perempuan",
+                            gender = emp.Gender == 0 ? "Laki-laki" : "Perempuan",
                             emp.Phone,
                             emp.birthDate,
                             emp.salary,

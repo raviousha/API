@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace API.ViewModels
 {
-    public class LoginVM
+    public class ForgotVM
     {
         [Required(ErrorMessage = "Email cannot be empty")]
         [EmailAddress(ErrorMessage = "Enter valid Email address")]
         public String email { get; set; }
-
-        [Required(ErrorMessage = "Password cannot be empty")]
-        [DataType(DataType.Password)]
-        public string password { get; set; }
     }
 }

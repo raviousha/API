@@ -4,14 +4,16 @@ using API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20211227073313_change-variable")]
+    partial class changevariable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,15 +25,6 @@ namespace API.Migrations
                 {
                     b.Property<string>("NIK")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("OTP")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("expiredToken")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("isUsed")
-                        .HasColumnType("bit");
 
                     b.Property<string>("password")
                         .IsRequired()

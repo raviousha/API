@@ -223,9 +223,9 @@ namespace API.Controllers
         [HttpPost("register")]
         public ActionResult Post(RegisterVM registerVM)
         {
-                var code = 0;
-                var message = "";
-                var result = employeeRepository.Register(registerVM);
+            var code = 0;
+            var message = "";
+            var result = employeeRepository.Register(registerVM);
 
 
             switch (result)
@@ -235,7 +235,7 @@ namespace API.Controllers
                         code = StatusCodes.Status400BadRequest;
                         message = $"Email {registerVM.email} is already exist";
                         break;
-                        
+
                     }
                 case 2:
                     {
@@ -325,5 +325,33 @@ namespace API.Controllers
                 return Ok($"{e.Message}");
             }
         }
+
+        //[HttpDelete("delete/{nik}")]
+        //public ActionResult DeleteRegisteredData(String nik)
+        //{
+        //    try
+        //    {
+        //        var code = 0;
+        //        var message = "";
+        //        var result = employeeRepository.Delete(nik);
+
+        //        if (result == 4)
+        //        {
+        //            code = StatusCodes.Status200OK;
+        //            message = "Employee data deleted";
+        //        }
+        //        else
+        //        {
+        //            //code = Response.StatusCode;
+        //            code = StatusCodes.Status404NotFound;
+        //            message = $"Employee data with NIK {nik} not found";
+        //        }
+        //        return Ok(new { code, result, message });
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Ok(e.Message);
+        //    }
+        //}
     }
 }

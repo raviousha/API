@@ -26,6 +26,7 @@ namespace API.Models
         ErrorMessage = "The property {0} should have {2} minimum characters and {1} maximum characters")]
         public String lastName { get; set; }
 
+        [Required]
         [RegularExpression(@"^\d{4}?-?\d{4}?-?\d{3,5}$")]
         [Phone(ErrorMessage = "Enter valid Phone Number")]
         public String Phone { get; set; }
@@ -43,7 +44,7 @@ namespace API.Models
 
         [Required]
         [Range(0, 1, ErrorMessage = "The property {0} should have value {1} for Male and {2} for Female")]
-        public Gender gender { get; set; }
+        public Gender Gender { get; set; }
 
         [JsonIgnore]
         public virtual Account Account { get; set; }
