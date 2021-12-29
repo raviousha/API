@@ -1,9 +1,11 @@
 ﻿using API.Models;
 using API.Repository;
 using API.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -249,7 +251,7 @@ namespace API.Controllers
                         message = $"Employee Input failed";
                         break;
                     }
-                case 4:
+                case 5:
                     {
                         code = StatusCodes.Status200OK;
                         message = $"Employee data with Name {registerVM.firstName} {registerVM.lastName} saved";
@@ -266,6 +268,8 @@ namespace API.Controllers
             return Ok(new { code, result, message });
         }
 
+        [Authorize(Roles = "director,manager")]
+        //[Authorize(Roles = "manager")]
         [HttpGet("show")]
         public ActionResult GetRegisteredData()
         {

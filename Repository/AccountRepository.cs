@@ -10,6 +10,7 @@ using MimeKit.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace API.Repository
@@ -145,7 +146,8 @@ namespace API.Repository
             sendEmail.From.Add(sendEmail.Sender);
             sendEmail.To.Add(MailboxAddress.Parse(forgotVM.email));
             sendEmail.Subject = "OTP for Changing Password";
-            sendEmail.Body = new TextPart(TextFormat.Html) { 
+            sendEmail.Body = new TextPart(TextFormat.Html)
+            {
                 Text = $"Hello, {emp.firstName} {emp.lastName}" +
                 $"<br>" +
                 $"We’ve received a password change request for your account. To complete your request, enter the following verification code:" +
@@ -171,6 +173,23 @@ namespace API.Repository
                 client.Send(sendEmail);
                 client.Disconnect(true);
             }
+        }
+
+        public IEnumerable<object> GetRoles(LoginVM loginVM)
+        {
+            var empList = myContext.Employees;
+            var arList = myContext.AccountRoles;
+            var rList = myContext.Roles;
+
+            var query = from emp in empList
+                        join ar in arList
+                        on emp.NIK equals ar.AccountsNIK
+                        join r in rList
+                        on ar.RolesId equals r.Id
+                        where emp.Email == loginVM.email
+                        select r.name;
+
+            return query;
         }
     }
 }

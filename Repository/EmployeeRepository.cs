@@ -3,6 +3,7 @@ using API.Models;
 using API.Repository.Interface;
 using API.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -155,6 +156,13 @@ namespace API.Repository
             };
             myContext.Accounts.Add(acc);
 
+            var ar = new AccountRole
+            {
+                AccountsNIK = emp.NIK,
+                RolesId = 3
+            };
+            myContext.AccountRoles.Add(ar);
+
             var edu = new Education
             {
                 Id = $"{myContext.Educations.Count() + 1}",
@@ -178,14 +186,21 @@ namespace API.Repository
         {
             var empList = myContext.Employees;
             var uniList = myContext.Universities;
+            var acList = myContext.AccountRoles;
+            var rList = myContext.Roles;
             var eduList = myContext.Educations;
             var trList = myContext.Profilings;
+
 
             var query = from emp in empList
                         join tr in trList
                         on emp.NIK equals tr.NIK
                         join edu in eduList
                         on tr.EducationId equals edu.Id
+                        join ac in acList
+                        on emp.NIK equals ac.AccountsNIK
+                        join r in rList
+                        on ac.RolesId equals r.Id
                         join uni in uniList
                         on edu.UniversityId equals uni.Id
                         select new
@@ -233,5 +248,6 @@ namespace API.Repository
                         };
             return query;
         }
+
     }
 }

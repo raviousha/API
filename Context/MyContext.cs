@@ -19,13 +19,13 @@ namespace API.Context
             optionsBuilder.UseLazyLoadingProxies();
         }
 
-
-
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Education> Educations { get; set; }
         public DbSet<University> Universities { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Profiling> Profilings { get; set; }
+        public DbSet<AccountRole> AccountRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -77,6 +77,19 @@ namespace API.Context
                     .WithOne(e => e.Education);
             }
 
+            //Account-AccountRoles Relationship
+            {
+                modelBuilder.Entity<Account>()
+                    .HasMany(ar => ar.AccountRoles)
+                    .WithOne(a => a.Accounts);
+            }
+
+            //Role-AccountRoles Relationship
+            {
+                modelBuilder.Entity<Role>()
+                    .HasMany(ar => ar.AccountRoles)
+                    .WithOne(r => r.Roles);
+            }
         }
     }
 }
