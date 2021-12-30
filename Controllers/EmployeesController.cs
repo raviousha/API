@@ -2,6 +2,7 @@
 using API.Repository;
 using API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -269,7 +270,6 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "director,manager")]
-        //[Authorize(Roles = "manager")]
         [HttpGet("show")]
         public ActionResult GetRegisteredData()
         {
@@ -301,6 +301,7 @@ namespace API.Controllers
         }
 
         [HttpGet("show/{nik}")]
+        [EnableCors("AllowOrigin")]
         public ActionResult GetRegisteredData(String nik)
         {
             try
@@ -328,6 +329,13 @@ namespace API.Controllers
             {
                 return Ok($"{e.Message}");
             }
+        }
+
+        [HttpGet("TestCORS")]
+        [EnableCors("AllowOrigin")]
+        public ActionResult TestCORS()
+        {
+            return Ok("Test CORS berhasil");
         }
 
         //[HttpDelete("delete/{nik}")]

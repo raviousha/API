@@ -2,6 +2,7 @@
 using API.Repository;
 using API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -42,7 +43,7 @@ namespace API.Controllers
                         code = StatusCodes.Status200OK;
                         message = $"Login Success";
 
-                        //JWT TOKEN GENERATOR/////////////
+                        ///////////////JWT TOKEN GENERATOR////////////////
                         var getRole = accountRepository.GetRoles(loginVM);
 
                         var claims = new List<Claim>
@@ -66,7 +67,7 @@ namespace API.Controllers
 
                         var idtoken = new JwtSecurityTokenHandler().WriteToken(token);
                         claims.Add(new Claim("TokenSecurity", idtoken.ToString()));
-                        //////////////
+                        ///////////////////////////////////////////////////////////
 
                         return Ok(new { code, idtoken, result, message });
                     }

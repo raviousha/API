@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
 
@@ -35,14 +36,15 @@ namespace API
             services.AddScoped<ProfilingRepository>();
             services.AddScoped<AccountRoleRepository>();
             services.AddScoped<RoleRepository>();
-            services.AddDbContext<MyContext>(options => 
+            services.AddDbContext<MyContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("API")));
 
             services.AddAuthentication(Auth =>
             {
                 Auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 Auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => {
+            }).AddJwtBearer(options =>
+            {
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters()
@@ -55,6 +57,16 @@ namespace API
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };
+            }); 
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
         }
 
@@ -72,6 +84,14 @@ namespace API
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors(options => options.AllowAnyOrigin());
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint(url:"/swagger/v1/swagger.json", name:"API v1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
